@@ -1,0 +1,28 @@
+<html>
+
+<head>
+  <title>Web App Auth & CORS API Demo</title>
+  <style></style>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" /> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='app.js')}}">
+
+ 
+  </script>
+</head>
+  <div>
+    <button class="looker" onclick="oauth_login()">Login with Looker</button>
+  </div>
+
+  <td>Log Response of Calls:
+    <br>
+    <textarea id="output" cols="100" rows="20">
+    </textarea>
+  </td>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Authenticated</title>
+  <script>
+    function stringify(obj) {
+      return JSON.stringify(obj, null, 2)
+    }
+
+    function log(msg) {
+      const txt = typeof msg === 'string' ? msg : stringify(msg)
+      const x = document.getElementById("output")
+      x.textContent = `${x.textContent}\n${txt}\n`
+      return msg
+    }
+
+    function page_load() {
+      const params = new URLSearchParams(window.location.search)
+      const auth_code = params.get('code')
+      if (auth_code) {
+        log(`auth code received: ${auth_code}`)
+        log(`state: ${params.get('state')}`)
+
+        // pass auth code response to index page
+        sessionStorage.setItem('auth_code_response', window.location.search)
+
+        // bounce back to index page with this page's url query params
+        // exclude this bounce page from browser history
+        window.location.replace('/')
+      } else {
+        log(`No auth code received. Error?`)
+      }
+    }
+  </script>
+</head>
+<body onload="page_load()">
+<div>
+  <textarea id="output" cols="80" rows="20"></textarea>
+</div>
+</body>
+</html>

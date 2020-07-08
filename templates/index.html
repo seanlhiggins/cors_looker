@@ -1,0 +1,122 @@
+<html>
+
+<head>
+  <title>Web App Auth & CORS API Demo</title>
+  <style></style>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" /> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='app.js')}}">
+
+ 
+  </script>
+</head>
+
+<body onload="page_load()">
+  <h1>Web App Auth & CORS API Demo</h1>
+
+  <div>
+    <button class="looker" onclick="oauth_login()">Login with Looker</button>
+  </div>
+<table>
+  <tr>
+    <td>
+      Some Example Calls:
+      
+      <div>
+        <button onclick="api4_get_user()">API 4.0 GET user</button>
+      </div>
+      
+      <div>
+        <button onclick="all_looks()">GET all_looks()</button>
+      </div>
+      <div>
+        <button onclick="create_look()">POST create_look()</button>
+      </div>
+      <div>
+        <button onclick="clear_text()">Clear messages</button>
+      </div>
+      <div>
+        <button class="logout" onclick="logout()">Logout</button>
+      </div>
+      
+      
+    </td>
+        <td>Log Response of Calls:
+          <br>
+          <textarea id="output" cols="100" rows="20">
+          </textarea>
+        </td>
+  </tr>
+</table>
+<br>
+<hr>
+<br>
+
+<h2>Faceted Filters Testing</h2>
+
+<!-- <div>
+  <button onclick="populate_states()">Populate Dropdown</button>
+</div> -->
+
+<p>Select State: (click <button class="dropdown" onclick="populate_states()">Populate States</button> to fill values retrieved from Looker's API)</p>
+<select id="dropdown-state">
+</select>
+<br>
+<p>Select City:
+(will be populated when you select a state)</p>
+<select id="dropdown-city">
+</select>
+
+<br>
+<hr>
+<br>
+
+<P style="page-break-before: always"></P>
+
+<div class="text-center">
+  <h2>SSO Embed Demo</h2>
+  <iframe id="looker" src={{url}} allowtransparency="true" height="900" width="100%"></iframe>
+</div>
+
+<script>
+let iframe = document.getElementById('looker');
+
+$('#dropdown-state').change(function() {
+            let state = $("#dropdown-state").val();
+            console.log(state)
+              iframe.contentWindow.postMessage(JSON.stringify({
+              type:"dashboard:filters:update",
+              filters:{
+                State: state
+              }
+            }),"https://profservices.dev.looker.com");
+              iframe.contentWindow.postMessage(JSON.stringify({
+              type: "dashboard:run"
+            }),"https://profservices.dev.looker.com");
+          })
+          
+$('#dropdown-city').change(function() {
+            let city = $("#dropdown-city").val();
+            console.log(city)
+              iframe.contentWindow.postMessage(JSON.stringify({
+              type:"dashboard:filters:update",
+              filters:{
+                City: city
+              }
+            }),"https://profservices.dev.looker.com");
+              iframe.contentWindow.postMessage(JSON.stringify({
+              type: "dashboard:run"
+            }),"https://profservices.dev.looker.com");
+          })
+</script>
+
+</body>
+
+</html>
